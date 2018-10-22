@@ -9,7 +9,7 @@ server.listen(port);
 
 function normalizePort(val) {
     const port = parseInt(val, 10);
-    if (isNan(port)) {
+    if (isNaN(port)) {
         return val;
     }
     if (port >= 0) {
@@ -19,5 +19,5 @@ function normalizePort(val) {
 }
 
 server.on('listening', () => {
-    console.log(`server is listening for requests on port ${server.address().port()}`);
+    console.log(`server is listening for requests on port ${server.address().port}`);
 });
