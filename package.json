@@ -4,13 +4,13 @@
   "description": "A Reddit-like application for users to discuss and share content",
   "main": "src/server.js",
   "scripts": {
-    "test": "set NODE_ENV=test && jasmine",
+    "test": "set NODE_ENV=test&& jasmine",
     "start": "node src/server.js"
   },
   "author": "Luke Strama",
   "license": "ISC",
   "devDependencies": {
-    "jasmine": "^3.0.0",
+    "jasmine": "^3.2.0",
     "request": "^2.83.0"
   },
   "dependencies": {
