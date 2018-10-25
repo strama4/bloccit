@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      topidId: {
+      topicId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
