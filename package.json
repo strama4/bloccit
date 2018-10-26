@@ -10,6 +10,7 @@
   "author": "Luke Strama",
   "license": "ISC",
   "devDependencies": {
+    "faker": "^4.1.0",
     "jasmine": "^3.2.0",
     "request": "^2.83.0"
   },
