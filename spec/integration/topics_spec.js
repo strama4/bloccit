@@ -5,7 +5,7 @@ const sequelize = require('../../src/db/models/index').sequelize;
 const Topic = require('../../src/db/models').Topic;
 
 describe('routes : topics', () => {
-    beforeEach((done) => {
+    beforeEach((done) => { // we want to run something before each time we load our database and test it
         this.topic;
         sequelize.sync({force: true}).then((res) => {
             Topic.create({
