@@ -39,13 +39,13 @@ module.exports = {
             }
             post.update(updatedPost, {
                 fields: Object.keys(updatedPost)
-            })
-            .then(() => {
-                callback(null, post);
+            }).then(() => {
+            callback(null, post);
             })
             .catch((err) => {
                 callback(err);
             });
-        });
+        })
+        
     }
 }
