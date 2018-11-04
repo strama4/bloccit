@@ -8,7 +8,8 @@ module.exports = {
         const newPost = {
             title: req.body.title,
             body: req.body.body,
-            topicId: req.params.topicId
+            topicId: req.params.topicId,
+            userId: req.user.id
         }
         postQueries.addPost(newPost, (err, post) => {
             if (err) {
