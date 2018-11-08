@@ -174,11 +174,100 @@ describe('routes : comments', () => {
                             .catch((err) => {
                                 console.log(err);
                                 done();
-                            })    
+                            });    
                         }
-                    )
+                    );
+                });
+            });
+            it('should not delete the comment if not the user', (done) => {
+                User.create({
+                    email: 'bob@gmail.com',
+                    password: 'bobisthebest'
+                })
+                .then((user) => {
+                    request.get({
+                        url: 'http://localhost:3000/auth/fake',
+                        form: {
+                            role: 'member',
+                            userId: user.id
+                        }
+                    }, (err, body, res) => {
+                        Comment.all()
+                        .then((comments) => {
+                            const commentCountBeforeDelete = comments.length;
+                            expect(commentCountBeforeDelete).toBe(1);
+                            request.post(`${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`,
+                            (err, res, body) => {
+                                Comment.all()
+                                .then((comments) => {
+                                    expect(comments.length).toBe(commentCountBeforeDelete);
+                                    done();
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    done();
+                                });
+                            })
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    // admin context
+    describe('admin using CRUD operations on Comment', () => {
+        beforeEach((done) => {
+            User.create({
+                email: 'daboss@admin.com',
+                password: 'beingabossisboss'
+            })
+            .then((user) => {
+                request.get({
+                    url: 'http://localhost:3000/auth/fake',
+                    form: {
+                        userId: user.id,
+                        role: 'admin',
+                        email: user.email
+                    }
+                }, (err, res, body) => {
+                    done();
                 })
             })
-        })
+            .catch((err) => {
+                console.log(err);
+                done();
+            });
+        });
+        describe('POST /topics/:topicId/posts/:postId/comments/:id/destroy', () => {
+            it('should delete a comment that was not created by the admin', (done) => {
+                Comment.all()
+                .then((comments) => {
+                    const commentCountBeforeDelete = comments.length;
+                    request.post(`${base}${this.topic.id}/posts/${this.post.id}/comments/${this.comment.id}/destroy`, 
+                        (err, res, body) => {
+                            expect(res.statusCode).toBe(302);
+                            Comment.all()
+                            .then((comments) => {
+                                expect(err).toBeNull();
+                                expect(comments.length).toBe(commentCountBeforeDelete - 1);
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    done();
+                });                
+            });
+        });
     });
 });
