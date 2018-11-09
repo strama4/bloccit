@@ -105,6 +105,20 @@ describe('Vote', () => {
                 done();
             });
         });
+        it('should not create a vote with a value other than 1 or -1', (done) => {
+            Vote.create({
+                value: 666,
+                userId: this.user.id,
+                postId: this.post.id 
+            })
+            .then((vote) => {
+                done();
+            })
+            .catch((err) => {
+                expect(err.message).toContain('Validation isIn on value failed');
+                done();
+            });
+        });
     });
 
     describe('#setUser()', () => {

@@ -123,6 +123,41 @@ describe('routes : votes', () => {
                     });
                 });
             });
+            it('should not allow a member to upvote twice on the same post', (done) => {
+                request.get(`${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`, 
+                (err, res, body) => {
+                    Vote.findOne({
+                        where: {
+                            userId: this.user.id,
+                            postId: this.post.id 
+                        }
+                    })
+                    .then((vote) => {
+                        expect(vote).not.toBeNull();
+                        request.get(`${base}${this.topic.id}/posts/${this.post.id}/votes/upvote`,
+                        (err, res, body) => {
+                            Vote.findAll({
+                                where: {
+                                    userId: this.user.id,
+                                    postId: this.post.id
+                                }
+                            })
+                            .then((votes) => {
+                                expect(votes.length).toBe(1);
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                done();
+                            });
+                        })
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        done();
+                    });
+                });
+            });
         });
         describe('GET /topics/:topicId/posts/:postId/votes/downvote', () => {
             it('should associate a downvote with the user/post and be a value of -1', (done) => {

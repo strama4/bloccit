@@ -46,5 +46,30 @@ module.exports = (sequelize, DataTypes) => {
       .reduce((prev, next) => { return prev + next });
   };
 
+  Post.prototype.hasUpvoteFor = function(userId) {
+    if (this.votes.length === 0) return false;
+
+    for (let i = 0; i < this.votes.length; i++) {
+      let currentVote = this.votes[i]['dataValues']
+      if (currentVote['userId'] === userId && currentVote['value'] === 1) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  Post.prototype.hasDownvoteFor = function(userId) {
+    if (this.votes.length === 0) return false;
+
+    for (let i = 0; i < this.votes.length; i++) {
+      let currentVote = this.votes[i]['dataValues']
+      if (currentVote['userId'] === userId && currentVote['value'] === -1) {
+        return true;
+      }
+    }
+    return false;
+
+  }
+
   return Post;
 };
