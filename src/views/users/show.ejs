@@ -38,6 +38,17 @@
                         <hr>
                     <% }) %>    
                 <% } %>
+            <hr>
+            <h2>Favorites</h2>
+                <% if(favorites) { %> 
+                    <% favorites.forEach((favorite) => { %> 
+                        <li>
+                            <a href="/topics/<%= favorite.Post.topicId %>/posts/<%= favorite.Post.id %>">
+                                <%= favorite.Post.title %>
+                            </a>
+                        </li>    
+                    <% }) %>
+                <% } %>
         </main>
         <% include ../static/partials/baseScripts.ejs %>
     </body>

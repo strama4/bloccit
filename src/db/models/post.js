@@ -70,8 +70,6 @@ module.exports = (sequelize, DataTypes) => {
     return this.favorites.find((favorite) => { return favorite.userId == userId });
   };
 
-  
-
   return Post;
 };
 
