@@ -17,9 +17,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 'member'
     },
-    
-    
-  }, {});
+  }, {
+      scopes: {
+        adminUsers: {
+          where: {
+            role: 'admin'
+          }
+        }
+      }
+    }, {});
   User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Post, {
