@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         postId: post.id
       });
     });
+<<<<<<< HEAD
   
     Post.addScope('lastFiveFor', (userId) => {
       return {
@@ -56,6 +57,16 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
   
+=======
+
+    Post.afterCreate((post, callback) => {
+      return models.Vote.create({
+        value: 1,
+        userId: post.userId,
+        postId: post.id
+      });
+    });
+>>>>>>> favoriting-assignment
   };
 
   Post.prototype.getPoints = function() {

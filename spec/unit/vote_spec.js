@@ -115,14 +115,14 @@ describe('Vote', () => {
                 postId: this.post.id 
             })
             .then((vote) => {
-                this.vote = vote;
+                // this.vote = vote;
                 expect(vote.userId).toBe(this.user.id);
                 User.create({
                     email: 'bob@example.com',
                     password: 'password'
                 })
                 .then((newUser) => {
-                    this.vote.setUser(newUser)
+                    vote.setUser(newUser)
                     .then((vote) => {
                         expect(vote.userId).toBe(newUser.id);
                         done();
