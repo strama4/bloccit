@@ -13,7 +13,6 @@ describe('routes : votes', () => {
         this.user;
         this.topic;
         this.post;
-        this.vote;
         sequelize.sync({force:true}).then(() => {
             User.create({
                 email: 'starman@tesla.com',
@@ -70,11 +69,12 @@ describe('routes : votes', () => {
                 request.get(options, (err, res, body) => {
                     Vote.findOne({
                         where: {
-                            userId: this.user.id,
+                            userId: 0,
                             postId: this.post.id
                         }
                     })
                     .then((vote) => {
+                        console.log(vote);
                         expect(vote).toBeNull();
                         done();
                     })

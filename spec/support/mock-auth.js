@@ -13,7 +13,7 @@ module.exports = {
                     'email': email,
                     'role': role
                 };
-            } else if (id == 0) {
+            } else if (id === 0) {
                 delete req.user;
             }
             if ( next ) { next() } 
